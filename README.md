@@ -18,3 +18,9 @@ Ctrl + Shift + P
 ### 1.0.0
 
 Initial release of ShortLinker
+
+
+
+### 1.0.1
+
+Some Changes
