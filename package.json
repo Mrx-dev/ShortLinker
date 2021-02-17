@@ -1,0 +1,49 @@
+{
+	"name": "shortlinker",
+	"displayName": "ShortLinker",
+	"publisher": "ShortLinker",
+	"icon": "./images/ShortLinker.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Microsoft/vscode-cpptools.git"
+	},
+	"description": "A simple URL shortener for vscode",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.53.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:shortlinker.shorten"
+	],
+	"main": "./extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "shortlinker.shorten",
+				"title": "ShortLinker"
+			}
+		]
+	},
+	"scripts": {
+		"lint": "eslint .",
+		"pretest": "npm run lint",
+		"test": "node ./test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.53.0",
+		"@types/glob": "^7.1.3",
+		"@types/mocha": "^8.0.4",
+		"@types/node": "^12.11.7",
+		"eslint": "^7.19.0",
+		"glob": "^7.1.6",
+		"mocha": "^8.2.1",
+		"typescript": "^4.1.3",
+		"vscode-test": "^1.5.0"
+	},
+	"dependencies": {
+		"tinyurl": "^1.1.7"
+	}
+}
