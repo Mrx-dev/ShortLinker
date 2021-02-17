@@ -1,11 +1,11 @@
 {
 	"name": "shortlinker",
 	"displayName": "ShortLinker",
-	"publisher": "ShortLinker",
-	"icon": "./images/ShortLinker.png",
+	"publisher": "MrxDev",
+	"icon": "images/ShortLinker.png",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Microsoft/vscode-cpptools.git"
+		"url": "https://github.com/Mrx-dev/ShortLinker"
 	},
 	"description": "A simple URL shortener for vscode",
 	"version": "0.0.1",
