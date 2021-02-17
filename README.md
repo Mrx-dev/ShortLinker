@@ -8,9 +8,6 @@ Ctrl + Shift + P
 
 <img src='https://i.imgur.com/H850ZlU.png'>
 
-## Requirements
-
-[TinyUrl](https://www.npmjs.com/package/tinyurl)
 
 ## Release Notes
 
