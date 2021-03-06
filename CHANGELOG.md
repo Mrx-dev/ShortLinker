@@ -1,9 +1,19 @@
 # Change Log
 
-All notable changes to the "shortlinker" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+### [0.0.1](https://marketplace.visualstudio.com/_apis/public/gallery/publishers/MrxDev/vsextensions/shortlinker/0.0.1/vspackage)
 
-## [Unreleased]
+- Initial release of ShortLinker
 
-- Initial release
+
+
+### [1.0.1](https://marketplace.visualstudio.com/_apis/public/gallery/publishers/MrxDev/vsextensions/shortlinker/1.0.1/vspackage)
+
+- Some Changes
+
+
+
+
+### [1.1.0](https://marketplace.visualstudio.com/_apis/public/gallery/publishers/MrxDev/vsextensions/shortlinker/1.1/vspackage)
+
+- Optimize the desgin

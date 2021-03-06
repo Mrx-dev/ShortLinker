@@ -1,4 +1,4 @@
-# ShortLinker 
+### ShortLinker 
 
 A simple URL shortener for vscode
 
@@ -9,15 +9,4 @@ Ctrl + Shift + P
 <img src='https://i.imgur.com/H850ZlU.png'>
 
 
-## Release Notes
 
-
-### 1.0.0
-
-Initial release of ShortLinker
-
-
-
-### 1.0.1
-
-Some Changes
