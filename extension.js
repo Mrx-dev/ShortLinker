@@ -3,7 +3,7 @@
 const vscode = require('vscode');
 const Tinyurl = require('tinyurl');
 const fs = require('fs');
-
+const path = require('path');
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 
@@ -14,7 +14,7 @@ async function activate(context) {
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "shortlinker" is now active!');
+	console.log('Thank you for using ShortLinker <3\nShortLinker made with love by MrxDev for you (https://mrxdev.ml/)');
 
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with  registerCommand
@@ -32,13 +32,17 @@ async function activate(context) {
 			}
 			else {
 				if (res == 'Error') {
+					console.error('The URL is invalid ❌')
 					let panel = vscode.window.createWebviewPanel(
 						'ShortLinker',
 						'ShortLinker',
-						vscode.ViewColumn.One,
+						vscode.ViewColumn.Active,
 						{}
 					);
-
+					let shortlinker_icon = vscode.Uri.file(
+						path.join(context.extensionPath, 'images', 'ShortLinker.png')
+					);
+					panel.iconPath = shortlinker_icon
 					let html_code = `<!DOCTYPE html>
 						<html lang="en">
 						
@@ -109,7 +113,6 @@ async function activate(context) {
 						</body>
 						
 						</html>`
-
 					panel.webview.html = getWebviewContent(html_code);
 					function getWebviewContent(html_code) {
 						return `${html_code}`;
@@ -122,15 +125,19 @@ async function activate(context) {
 						null,
 						context.subscriptions
 					);
-					console.log(err)
 				}
 				else {
 					let panel = vscode.window.createWebviewPanel(
 						'ShortLinker',
 						'ShortLinker',
-						vscode.ViewColumn.One,
+						vscode.ViewColumn.Two,
 						{}
 					);
+					let shortlinker_icon = vscode.Uri.file(
+						path.join(context.extensionPath, 'images', 'ShortLinker.png')
+					);
+					panel.iconPath = shortlinker_icon
+
 					let html_code = `<!DOCTYPE html>
 					<html lang="en">
 					
@@ -139,6 +146,7 @@ async function activate(context) {
 						<meta name="viewport" content="width=device-width, initial-scale=1.0">
 						<meta http-equiv="X-UA-Compatible" content="ie=edge">
 						<meta name="Description" content="Enter your description here" />
+						<link rel="shortcut icon" href="images/ShortLinker.png" type="image/png"> 
 						<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
 						<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 						<link rel="stylesheet" href="assets/css/style.css">

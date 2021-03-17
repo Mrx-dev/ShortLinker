@@ -14,6 +14,13 @@
 
 
 
-### [1.1.0](https://marketplace.visualstudio.com/_apis/public/gallery/publishers/MrxDev/vsextensions/shortlinker/1.1/vspackage)
+### [1.1.0](https://marketplace.visualstudio.com/_apis/public/gallery/publishers/MrxDev/vsextensions/shortlinker/1.1.0/vspackage)
 
 - Optimize the desgin
+
+
+
+### [1.2.0](https://marketplace.visualstudio.com/_apis/public/gallery/publishers/MrxDev/vsextensions/shortlinker/1.2.0/vspackage)
+
+- Some Changes
+- Fix Bugs
