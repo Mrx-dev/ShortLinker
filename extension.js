@@ -21,8 +21,8 @@ async function activate(context) {
 	// The commandId parameter must match the command field in package.json
 	let disposable = vscode.commands.registerCommand('shortlinker.shorten', async function () {
 		var InputBoxOptions = {
-			prompt: "Label: ",
-			placeHolder: "Put your link to short it."
+			placeHolder: "Put your link to short it.",
+			ignoreFocusOut: true
 		};
 		const link = await vscode.window.showInputBox(InputBoxOptions);
 		// The code you place here will be executed every time your command is executed

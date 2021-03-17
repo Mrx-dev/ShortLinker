@@ -20,7 +20,7 @@
 
 
 
-### [1.2.0](https://marketplace.visualstudio.com/_apis/public/gallery/publishers/MrxDev/vsextensions/shortlinker/1.2.0/vspackage)
+### [1.2.1](https://marketplace.visualstudio.com/_apis/public/gallery/publishers/MrxDev/vsextensions/shortlinker/1.2.1/vspackage)
 
 - Some Changes
 - Fix Bugs
