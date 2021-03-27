@@ -1,12 +1,15 @@
-# ShortLinker 
+# ShortLinker
 
-A simple URL shortener for vscode
+>A simple URL shortener for vscode.
 
-## Using
+## 📚 how to use ShortLinker
+    Ctrl + Shift + P
+### Commands
+- shortlinker.shorten (to short the LongURL).
+- shortlinker.expend (to expend the ShortURL).
+## 📄 License
+- MIT license.
 
-Ctrl + Shift + P
 
-<img src='https://i.imgur.com/H850ZlU.png'>
-
-
-
+## Disclaimer
+- of any malicious uses such as unsafe links and hacking links , the extension made to be useful not harmful.

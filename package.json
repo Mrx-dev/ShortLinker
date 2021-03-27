@@ -8,7 +8,7 @@
 		"url": "https://github.com/Mrx-dev/ShortLinker"
 	},
 	"description": "A simple URL shortener for vscode",
-	"version": "1.2.1",
+	"version": "1.3.0",
 	"engines": {
 		"vscode": "^1.32.1"
 	},
@@ -16,14 +16,19 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:shortlinker.shorten"
+		"onCommand:shortlinker.shorten",
+		"onCommand:shortlinker.expend"
 	],
 	"main": "./extension.js",
 	"contributes": {
 		"commands": [
 			{
 				"command": "shortlinker.shorten",
-				"title": "ShortLinker"
+				"title": "🔗 | Shorten Long URL."
+			},
+			{
+				"command": "shortlinker.expend",
+				"title": "🔗 | Expend ShortURL."
 			}
 		]
 	},
@@ -44,6 +49,7 @@
 		"vscode-test": "^1.5.0"
 	},
 	"dependencies": {
+		"expand-url": "^0.1.3",
 		"tinyurl": "^1.1.7"
 	}
 }

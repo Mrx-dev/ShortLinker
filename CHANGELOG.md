@@ -24,3 +24,11 @@
 
 - Some Changes
 - Fix Bugs
+
+
+
+### [1.3.0](https://marketplace.visualstudio.com/_apis/public/gallery/publishers/MrxDev/vsextensions/shortlinker/1.3.0/vspackage)
+
+- Add New Command (Expend the ShortURL)
+- Optimize the desgin of webview
+- Fix Bugs
