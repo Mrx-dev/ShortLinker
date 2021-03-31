@@ -9,9 +9,3 @@
 - shortlinker.shorten: (ctrl+alt+1).
 - shortlinker.expend: (ctrl+alt+2).
 - shortlinker.scan: (ctrl+alt+3).
-
-
-
-
-## Disclaimer:
-- of any malicious uses such as unsafe links and hacking links , the extension made to be useful not harmful.
