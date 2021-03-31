@@ -1,17 +1,17 @@
-# ShortLinker
+# ShortLinker:
+- you can now short your URL and expend and scan it easily with ShortLinker.
 
->A simple URL shortener for vscode.
-
-## 📚 how to use ShortLinker
-    Ctrl + Shift + P
-### Commands
+## Commands:
 - shortlinker.shorten (to short the LongURL).
 - shortlinker.expend (to expend the ShortURL).
-<br>
+- shortlinker.scan (to scan the URL).
+## Keyboard Shortcuts:
+- shortlinker.shorten: (ctrl+alt+1).
+- shortlinker.expend: (ctrl+alt+2).
+- shortlinker.scan: (ctrl+alt+3).
 
-## 📄 License
-- MIT license.
 
 
-## Disclaimer
+
+## Disclaimer:
 - of any malicious uses such as unsafe links and hacking links , the extension made to be useful not harmful.

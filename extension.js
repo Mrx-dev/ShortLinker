@@ -1,8 +1,10 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
+// @ts-ignore
 const Tinyurl = require('tinyurl');
 const path = require('path');
+// @ts-ignore
 const urlExpander = require('expand-url');
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -20,31 +22,34 @@ async function activate(context) {
 	// Now provide the implementation of the command with  registerCommand
 	// The commandId parameter must match the command field in package.json
 	let disposable = vscode.commands.registerCommand('shortlinker.shorten', async function () {
-		var InputBoxOptions = {
-			placeHolder: "Put your link to short it.",
-			ignoreFocusOut: true
-		};
-		let link = await vscode.window.showInputBox(InputBoxOptions);
-		if (link == '') return;
-		// The code you place here will be executed every time your command is executed
-		Tinyurl.shorten(link, function (res, err) {
-			if (err) {
-				console.log(err);
-			}
-			else {
-				if (res == 'Error') {
-					console.error('The URL is invalid ❌')
-					let panel = vscode.window.createWebviewPanel(
-						'ShortLinker Shorten ✨',
-						'ShortLinker Shorten ✨',
-						vscode.ViewColumn.Active,
-						{}
-					);
-					let shortlinker_icon = vscode.Uri.file(
-						path.join(context.extensionPath, 'images', 'ShortLinker.png')
-					);
-					panel.iconPath = shortlinker_icon
-					let html_code = `<!DOCTYPE html>
+		const editor = vscode.window.activeTextEditor;
+		if (!editor) {
+			let InputBoxOptions = {
+				prompt: "ShortLinker ✨| Shorten",
+				placeHolder: "Put your link to short it.",
+				ignoreFocusOut: true
+			};
+			let link = await vscode.window.showInputBox(InputBoxOptions);
+			if (link == '' || link == undefined) return;
+			// The code you place here will be executed every time your command is executed
+			Tinyurl.shorten(link, function (res, err) {
+				if (err) {
+					console.log(err);
+				}
+				else {
+					if (res == 'Error') {
+						console.error('The URL is invalid ❌')
+						let panel = vscode.window.createWebviewPanel(
+							'ShortLinker Shorten ✨',
+							'ShortLinker Shorten ✨',
+							vscode.ViewColumn.Active,
+							{}
+						);
+						let shortlinker_icon = vscode.Uri.file(
+							path.join(context.extensionPath, 'images', 'ShortLinker.png')
+						);
+						panel.iconPath = shortlinker_icon
+						let html_code = `<!DOCTYPE html>
 						<html lang="en">
 						
 						<head>
@@ -114,32 +119,32 @@ async function activate(context) {
 						</body>
 						
 						</html>`
-					panel.webview.html = getWebviewContent(html_code);
-					function getWebviewContent(html_code) {
-						return `${html_code}`;
+						panel.webview.html = getWebviewContent(html_code);
+						function getWebviewContent(html_code) {
+							return `${html_code}`;
+						}
+
+						panel.onDidDispose(
+							() => {
+								panel = undefined;
+							},
+							null,
+							context.subscriptions
+						);
 					}
+					else {
+						let panel = vscode.window.createWebviewPanel(
+							'ShortLinker Shorten ✨',
+							'ShortLinker Shorten ✨',
+							vscode.ViewColumn.Active,
+							{}
+						);
+						let shortlinker_icon = vscode.Uri.file(
+							path.join(context.extensionPath, 'images', 'ShortLinker.png')
+						);
+						panel.iconPath = shortlinker_icon
 
-					panel.onDidDispose(
-						() => {
-							panel = undefined;
-						},
-						null,
-						context.subscriptions
-					);
-				}
-				else {
-					let panel = vscode.window.createWebviewPanel(
-						'ShortLinker Shorten ✨',
-						'ShortLinker Shorten ✨',
-						vscode.ViewColumn.Active,
-						{}
-					);
-					let shortlinker_icon = vscode.Uri.file(
-						path.join(context.extensionPath, 'images', 'ShortLinker.png')
-					);
-					panel.iconPath = shortlinker_icon
-
-					let html_code = `<!DOCTYPE html>
+						let html_code = `<!DOCTYPE html>
 					<html lang="en">
 					
 					<head>
@@ -211,46 +216,68 @@ async function activate(context) {
 					
 					</html>`
 
-					panel.webview.html = getWebviewContent(html_code);
-					function getWebviewContent(html_code) {
-						return `${html_code}`;
-					}
+						panel.webview.html = getWebviewContent(html_code);
+						function getWebviewContent(html_code) {
+							return `${html_code}`;
+						}
 
-					panel.onDidDispose(
-						() => {
-							panel = undefined;
-						},
-						null,
-						context.subscriptions
-					);
+						panel.onDidDispose(
+							() => {
+								panel = undefined;
+							},
+							null,
+							context.subscriptions
+						);
+					}
 				}
-			}
-		})
-		// Display a message box to the user
+			})
+		}
+		else {
+			const text_editor = editor.document.getText(editor.selection);
+			if (text_editor == '' || text_editor == undefined) return vscode.window.showInformationMessage("you need to select the url in editor.");
+			Tinyurl.shorten(text_editor, function (res, err) {
+				if (err) {
+					console.log(err);
+				}
+				else {
+					if (res == 'Error') return vscode.window.showErrorMessage("The URL is invalid ❌");
+					editor.edit((edit) => {
+						edit.replace(editor.selection, res);
+					})
+				}
+
+			});
+		}
+
 	});
 
 
 	let expend_shorturl = vscode.commands.registerCommand('shortlinker.expend', async function () {
-		var InputBoxOptions = {
-			placeHolder: "Put your link to Expend it.",
-			ignoreFocusOut: true
-		};
-		let shorten_url = await vscode.window.showInputBox(InputBoxOptions);
-		if (shorten_url == '') return;
-		urlExpander.expand(shorten_url, function (err, longUrl) {
-			if (err) {
-				console.log(err);
-				let panel = vscode.window.createWebviewPanel(
-					'ShortLinker Expend ✨',
-					'ShortLinker Expend ✨',
-					vscode.ViewColumn.Active,
-					{}
-				);
-				let shortlinker_icon = vscode.Uri.file(
-					path.join(context.extensionPath, 'images', 'ShortLinker.png')
-				);
-				panel.iconPath = shortlinker_icon
-				let html_code = `<!DOCTYPE html>
+		const editor = vscode.window.activeTextEditor;
+		if (!editor) {
+
+
+			let InputBoxOptions = {
+				prompt: "ShortLinker ✨| Expend",
+				placeHolder: "Put your link to Expend it.",
+				ignoreFocusOut: true
+			};
+			let shorten_url = await vscode.window.showInputBox(InputBoxOptions);
+			if (shorten_url == '' || shorten_url == undefined) return;
+			urlExpander.expand(shorten_url, function (err, longUrl) {
+				if (err) {
+					console.log(err);
+					let panel = vscode.window.createWebviewPanel(
+						'ShortLinker Expend ✨',
+						'ShortLinker Expend ✨',
+						vscode.ViewColumn.Active,
+						{}
+					);
+					let shortlinker_icon = vscode.Uri.file(
+						path.join(context.extensionPath, 'images', 'ShortLinker.png')
+					);
+					panel.iconPath = shortlinker_icon
+					let html_code = `<!DOCTYPE html>
 					<html lang="en">
 					
 					<head>
@@ -320,32 +347,32 @@ async function activate(context) {
 					</body>
 					
 					</html>`
-				panel.webview.html = getWebviewContent(html_code);
-				function getWebviewContent(html_code) {
-					return `${html_code}`;
-				}
+					panel.webview.html = getWebviewContent(html_code);
+					function getWebviewContent(html_code) {
+						return `${html_code}`;
+					}
 
-				panel.onDidDispose(
-					() => {
-						panel = undefined;
-					},
-					null,
-					context.subscriptions
-				);
-			}
-			else {
-				console.log(longUrl);
-				let panel = vscode.window.createWebviewPanel(
-					'ShortLinker Expend ✨',
-					'ShortLinker Expend ✨',
-					vscode.ViewColumn.Active,
-					{}
-				);
-				let shortlinker_icon = vscode.Uri.file(
-					path.join(context.extensionPath, 'images', 'ShortLinker.png')
-				);
-				panel.iconPath = shortlinker_icon
-				let html_code = `<!DOCTYPE html>
+					panel.onDidDispose(
+						() => {
+							panel = undefined;
+						},
+						null,
+						context.subscriptions
+					);
+				}
+				else {
+					console.log(longUrl);
+					let panel = vscode.window.createWebviewPanel(
+						'ShortLinker Expend ✨',
+						'ShortLinker Expend ✨',
+						vscode.ViewColumn.Active,
+						{}
+					);
+					let shortlinker_icon = vscode.Uri.file(
+						path.join(context.extensionPath, 'images', 'ShortLinker.png')
+					);
+					panel.iconPath = shortlinker_icon
+					let html_code = `<!DOCTYPE html>
 					<html lang="en">
 					
 					<head>
@@ -415,25 +442,74 @@ async function activate(context) {
 					</body>
 					
 					</html>`
-				panel.webview.html = getWebviewContent(html_code);
-				function getWebviewContent(html_code) {
-					return `${html_code}`;
-				}
+					panel.webview.html = getWebviewContent(html_code);
+					function getWebviewContent(html_code) {
+						return `${html_code}`;
+					}
 
-				panel.onDidDispose(
-					() => {
-						panel = undefined;
-					},
-					null,
-					context.subscriptions
-				);
+					panel.onDidDispose(
+						() => {
+							panel = undefined;
+						},
+						null,
+						context.subscriptions
+					);
+				}
+			});
+		}
+		else {
+			const expend_url = editor.document.getText(editor.selection);
+			if (expend_url == '' || expend_url == undefined) return vscode.window.showInformationMessage("you need to select the url in editor.");
+			urlExpander.expand(expend_url, function (err, longUrl) {
+				if (err) {
+					console.log(err);
+					vscode.window.showErrorMessage("This is not a ShortURL")
+				}
+				else {
+					editor.edit((edit) => {
+						edit.replace(editor.selection, longUrl);
+					})
+				}
+			});
+
+		}
+	});
+	let scan_shorturl = vscode.commands.registerCommand('shortlinker.scan', async function () {
+		let InputBoxOptions = {
+			prompt: "ShortLinker ✨| Scan",
+			placeHolder: "Put your link to Scan it.",
+			ignoreFocusOut: true
+		};
+		let scan_url = await vscode.window.showInputBox(InputBoxOptions);
+
+		if (scan_url == '' || scan_url == undefined) return;
+		if (scan_url.indexOf("http://") == 0 || scan_url.indexOf("https://") == 0) {
+			let scan_result = await vscode.window.showInformationMessage('Check if safe on', 'Web Of Trust', 'Google', 'SiteAdvisor', 'Norton')
+
+			if (scan_result == 'Google') {
+				// @ts-ignore
+				vscode.env.openExternal(`https://www.google.com/safebrowsing/diagnostic?site=${scan_url}`);
 			}
-		});
+			else if (scan_result == 'Web Of Trust') {
+				// @ts-ignore
+				vscode.env.openExternal(`https://www.mywot.com/en/scorecard/${scan_url}`)
+			}
+			else if (scan_result == 'SiteAdvisor') {
+				// @ts-ignore
+				vscode.env.openExternal(`https://www.siteadvisor.com/sitereport.html?url=${scan_url}`)
+			}
+			else if (scan_result == 'Norton') {
+				// @ts-ignore
+				vscode.env.openExternal(`https://safeweb.norton.com/report/show?url=${scan_url}`)
+			}
+		}
+		else {
+			vscode.window.showErrorMessage("that's not a url ❌")
+		}
 	});
 
-
-
 	context.subscriptions.push(disposable);
+	context.subscriptions.push(scan_shorturl);
 	context.subscriptions.push(expend_shorturl);
 }
 
